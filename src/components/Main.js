@@ -1,10 +1,8 @@
-import { api } from "../utils/api.js";
-import React from "react";
-import Card from "./Card.js";
-
+import { api } from '../utils/api.js';
+import React from 'react';
+import Card from './Card.js';
 
 function Main(props) {
-  
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
@@ -15,7 +13,7 @@ function Main(props) {
       api.getProfileContent({
         name: userName,
         about: userDescription,
-        avatar: userAvatar,
+        avatar: userAvatar
       }),
       api.getInitialCards()
     ])
@@ -25,34 +23,42 @@ function Main(props) {
         setUserAvatar(info.avatar);
         setCards(cards);
       })
-      .catch((err) => console.log(err));
-
-  }, [userName, userDescription, userAvatar])
+      .catch(err => console.log(err));
+  }, [userName, userDescription, userAvatar]);
 
   return (
     <main className="content">
-        <section className="profile">
-          <div className="profile__card">
-            <div className="profile__place-avatar">
-              <img alt="фотография профиля" src={userAvatar} className="profile__avatar" />
-              <button className="profile__avatar-button" type="button" onClick={props.onEditAvatar}></button>
-            </div>
-            <div className="profile__info">
-              <div className="profile__content">
-                <h1 className="profile__title">{userName}</h1>
-                <button className="profile__edit-button" type="button" onClick={props.onEditProfile}></button>
-              </div>
-              <p className="profile__subtitle">{userDescription}</p>
-            </div>
+      <section className="profile">
+        <div className="profile__card">
+          <div className="profile__place-avatar">
+            <img alt="фотография профиля" src={userAvatar} className="profile__avatar" />
+            <button
+              className="profile__avatar-button"
+              type="button"
+              onClick={props.onEditAvatar}
+            ></button>
           </div>
-          <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
-        </section>
-        <Card 
-          card={cards}
-          onCardClick={props.onCardClick}
-        />
-      </main>
-  )
+          <div className="profile__info">
+            <div className="profile__content">
+              <h1 className="profile__title">{userName}</h1>
+              <button
+                className="profile__edit-button"
+                type="button"
+                onClick={props.onEditProfile}
+              ></button>
+            </div>
+            <p className="profile__subtitle">{userDescription}</p>
+          </div>
+        </div>
+        <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
+      </section>
+      <section className="cards" aria-label="подборка фотографий интересных мест мира">
+        <ul className="cards__list">
+          <Card card={cards} onCardClick={props.onCardClick} />
+        </ul>
+      </section>
+    </main>
+  );
 }
 
 export default Main;

@@ -5,7 +5,7 @@ function Header() {
     <header className="header">
       <img src={logo} className="header__logo" alt="логотип сайта Место" />
     </header>
-  )
+  );
 }
 
 export default Header;
