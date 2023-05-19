@@ -27,10 +27,10 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  function handleCardClick(evt) {
+  function handleCardClick(card) {
     setSelectedCard({
-      name: evt.target.alt,
-      link: evt.target.src,
+      name: card.name,
+      link: card.link,
       isOpen: true
     });
   }
