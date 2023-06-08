@@ -2,23 +2,24 @@ export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._token = options.headers.authorization;
-    this._contentType = options.headers["Content-Type"];
+    this._headers = options.headers;
+    this._contentType = options.headers['Content-Type'];
   }
 
   _getCheck(res) {
     if (res.ok) {
-      return res.json()
+      return res.json();
     } else {
-      return Promise.reject(`Ошибка ${res.status}`)
+      return Promise.reject(`Ошибка ${res.status}`);
     }
   }
 
   getInitialCards() {
     return fetch(this._baseUrl + 'cards', {
       headers: {
-        authorization: this._token,
+        authorization: this._token
       }
-    }).then((res) => this._getCheck(res));
+    }).then(res => this._getCheck(res));
   }
 
   addNewCard({ name, link }) {
@@ -32,16 +33,15 @@ export default class Api {
         name: name,
         link: link
       })
-    }).then((res) => this._getCheck(res));
+    }).then(res => this._getCheck(res));
   }
-
 
   getProfileContent() {
     return fetch(this._baseUrl + 'users/me', {
       headers: {
-        authorization: this._token,
+        authorization: this._token
       }
-    }).then((res) => this._getCheck(res));
+    }).then(res => this._getCheck(res));
   }
 
   submitProfileData({ name, about }) {
@@ -55,34 +55,21 @@ export default class Api {
         name: name,
         about: about
       })
-    }).then((res) => this._getCheck(res));
+    }).then(res => this._getCheck(res));
   }
 
   deleteCard(cardId) {
     return fetch(this._baseUrl + `cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token,
-      }
-    }).then((res) => this._getCheck(res));
+      headers: this._headers
+    }).then(res => this._getCheck(res));
   }
 
-  addLike(cardId) {
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(this._baseUrl + `cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: {
-        authorization: this._token,
-      }
-    }).then((res) => this._getCheck(res));
-  }
-
-  removeLike(cardId) {
-    return fetch(this._baseUrl + `cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: {
-        authorization: this._token,
-      }
-    }).then((res) => this._getCheck(res));
+      method: `${!isLiked ? 'DELETE' : 'PUT'}`,
+      headers: this._headers
+    }).then(res => this._getCheck(res));
   }
 
   submitEditAvatar({ avatar }) {
@@ -95,9 +82,8 @@ export default class Api {
       body: JSON.stringify({
         avatar: avatar
       })
-    }).then((res) => this._getCheck(res));
+    }).then(res => this._getCheck(res));
   }
-
 }
 
 export const api = new Api({
@@ -105,5 +91,5 @@ export const api = new Api({
   headers: {
     authorization: '3f6b2ef5-b9e5-4ebd-9f38-797a06c223a7',
     'Content-Type': 'application/json'
-  },
+  }
 });
