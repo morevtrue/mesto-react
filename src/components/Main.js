@@ -30,7 +30,7 @@ function Main(props) {
             <p className="profile__subtitle">{currentUser.about}</p>
           </div>
         </div>
-        <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
+        <button className="profile__add-button" type="button" onClick={props.onAddPlace} />
       </section>
       <section className="cards" aria-label="подборка фотографий интересных мест мира">
         <ul className="cards__list">
