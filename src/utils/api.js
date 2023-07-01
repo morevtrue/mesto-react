@@ -84,7 +84,6 @@ export default class Api {
       })
     }).then(res => this._getCheck(res));
   }
-
 }
 
 export const api = new Api({
